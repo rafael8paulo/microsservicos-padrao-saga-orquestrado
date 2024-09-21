@@ -28,4 +28,4 @@ logging:
   level:
     org:
       apache:
-        kafka: OF
+        kafka: OFF
