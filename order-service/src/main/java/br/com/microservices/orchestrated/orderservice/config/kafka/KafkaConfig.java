@@ -1,6 +1,7 @@
 package br.com.microservices.orchestrated.orderservice.config.kafka;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
 
 import java.util.HashMap;
@@ -18,6 +20,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class KafkaConfig {
 
+    private final static Integer PARTITION_COUNT = 1;
+    private final static Integer REPLICA_COUNT = 1;
+
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
@@ -26,6 +31,12 @@ public class KafkaConfig {
 
     @Value("${spring.kafka.consumer.auto-offset-reset}")
     private String autoOffsetReset;
+
+    @Value("${spring.kafka.topic.start-saga}")
+    private String startSagaTopic;
+
+    @Value("${spring.kafka.topic.notify-ending}")
+    private String notifySagaTopic;
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
@@ -58,6 +69,24 @@ public class KafkaConfig {
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
+    }
+
+    private NewTopic buildTopic(String name) {
+        return TopicBuilder
+                .name(name)
+                .replicas(PARTITION_COUNT)
+                .partitions(REPLICA_COUNT)
+                .build();
+    }
+
+    @Bean
+    public NewTopic startSagaTopic() {
+        return buildTopic(startSagaTopic);
+    }
+
+    @Bean
+    public NewTopic notifyEndingTopic() {
+        return buildTopic(notifySagaTopic);
     }
 
 }

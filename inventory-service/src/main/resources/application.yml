@@ -20,8 +20,8 @@ spring:
     bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
     topic:
       orchestrator: orchestrator
-      inventory-validation-success: inventory-validation-success
-      inventory-validation-fail: inventory-validation-fail
+      inventory-success: inventory-success
+      inventory-fail: inventory-fail
     consumer:
       group-id: inventory-group
       auto-offset-reset: latest
