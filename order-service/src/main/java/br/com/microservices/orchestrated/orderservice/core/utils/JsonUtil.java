@@ -11,7 +11,7 @@ public class JsonUtil {
 
     private final ObjectMapper objectMapper;
 
-    private String toJson(Object object) {
+    public String toJson(Object object) {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (Exception ex) {
