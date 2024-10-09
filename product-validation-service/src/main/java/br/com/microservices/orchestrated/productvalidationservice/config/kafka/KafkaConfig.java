@@ -5,6 +5,7 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,8 +21,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class KafkaConfig {
 
-    private final static Integer PARTITION_COUNT = 1;
-    private final static Integer REPLICA_COUNT = 1;
+    private static final Integer PARTITION_COUNT = 1;
+    private static final Integer REPLICA_COUNT = 1;
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
@@ -64,8 +65,8 @@ public class KafkaConfig {
     private Map<String, Object> producerProps() {
         var props = new HashMap<String, Object>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return props;
     }
 
@@ -77,8 +78,8 @@ public class KafkaConfig {
     private NewTopic buildTopic(String name) {
         return TopicBuilder
                 .name(name)
-                .replicas(PARTITION_COUNT)
-                .partitions(REPLICA_COUNT)
+                .partitions(PARTITION_COUNT)
+                .replicas(REPLICA_COUNT)
                 .build();
     }
 
@@ -96,5 +97,4 @@ public class KafkaConfig {
     public NewTopic productValidationFailTopic() {
         return buildTopic(productValidationFailTopic);
     }
-
 }
