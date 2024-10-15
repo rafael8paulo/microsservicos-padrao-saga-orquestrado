@@ -65,7 +65,7 @@ public class PaymentService {
                 .getPayload()
                 .getProducts()
                 .stream()
-                .map(product -> product.getQuantity() * product.getProduct().getUnitVal())
+                .map(product -> product.getQuantity() * product.getProduct().getUnitValue())
                 .reduce(REDUCE_SUM_VALUE, Double::sum);
     }
 
