@@ -137,7 +137,7 @@ public class PaymentService {
         addHistory(event, "Fail to realize payment: ".concat(message));
     }
 
-    private void realizeRefund(Event event) {
+    public void realizeRefund(Event event) {
         changePaymentStatusToRefund(event);
         event.setStatus(FAIL);
         event.setSource(CURRENT_SOURCE);
