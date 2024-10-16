@@ -15,40 +15,43 @@ services:
       - 27017:27017
 
   product-db:
-    image: postgres:latest
     container_name: product-db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: product-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
     networks:
       - orchestrator-saga
-    environment:
-      - POSTGRES_DB=product-db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
     ports:
-      - 5432:5432
+      - "5432:5432"
 
   payment-db:
-    image: postgres:latest
     container_name: payment-db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: payment-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
     networks:
       - orchestrator-saga
-    environment:
-      - POSTGRES_DB=payment-db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
     ports:
-      - 5433:5432
+      - "5433:5432"
 
   inventory-db:
-    image: postgres:latest
     container_name: inventory-db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: inventory-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
     networks:
       - orchestrator-saga
-    environment:
-      - POSTGRES_DB=inventory-db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
     ports:
-      - 5434:5432
+      - "5434:5432"
 
   kafka:
     container_name: kafka
@@ -125,11 +128,11 @@ services:
       - orchestrator-saga
     environment:
       - KAFKA_BROKER=kafka:29092
-      - DB_HOST:product-db
-      - DB_NAME:product-db
-      - DB_PORT:5432
-      - DB_PORT:postgres
-      - DB_PASSWORD:postgres
+      - DB_HOST=product-db
+      - DB_PORT=5432
+      - DB_NAME=product-db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
     ports:
       - 8090:8090
 
@@ -143,11 +146,11 @@ services:
       - orchestrator-saga
     environment:
       - KAFKA_BROKER=kafka:29092
-      - DB_HOST:payment-db
-      - DB_NAME:payment-db
-      - DB_PORT:5432
-      - DB_PORT:postgres
-      - DB_PASSWORD:postgres
+      - DB_HOST=payment-db
+      - DB_PORT=5432
+      - DB_NAME=payment-db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
     ports:
       - 8091:8091
 
@@ -161,11 +164,11 @@ services:
       - orchestrator-saga
     environment:
       - KAFKA_BROKER=kafka:29092
-      - DB_HOST:inventory-db
-      - DB_NAME:inventory-db
-      - DB_PORT:5432
-      - DB_PORT:postgres
-      - DB_PASSWORD:postgres
+      - DB_HOST=inventory-db
+      - DB_PORT=5432
+      - DB_NAME=inventory-db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
     ports:
       - 8092:8092
 

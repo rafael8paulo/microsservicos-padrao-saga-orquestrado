@@ -10,6 +10,6 @@ import lombok.Data;
 public class Product {
 
     private String code;
-    private double unitVal;
+    private double unitValue;
 
 }
