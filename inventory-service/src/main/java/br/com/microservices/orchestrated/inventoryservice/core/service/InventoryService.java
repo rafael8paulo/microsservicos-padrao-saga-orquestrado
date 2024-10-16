@@ -86,6 +86,7 @@ public class InventoryService {
                 .orderQuantity(product.getQuantity())
                 .newQuantity(inventory.getAvailable() - product.getQuantity())
                 .orderId(event.getPayload().getId())
+                .transactionId(event.getTransactionId())
                 .build();
     }
 
