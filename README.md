@@ -38,7 +38,7 @@
 
 No curso, desenvolveremos a seguinte aquitetura:
 
-![Arquitetura](https://github.com/user-attachments/assets/dc03600e-48b9-4bb0-9c30-008b37348ba9)
+![Arquitetura](https://github.com/user-attachments/assets/bffbd912-fea4-41c6-9755-2b3a9172278e)
 
 
 Em nossa arquitetura, teremos 5 serviços:
